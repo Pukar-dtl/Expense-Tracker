@@ -1,0 +1,1 @@
+{"version":3,"file":"expense.model.d.ts","sourceRoot":"","sources":["../../src/models/expense.model.ts"],"names":[],"mappings":"AAAA,OAAO,QAAoB,MAAM,UAAU,CAAC;AAE5C,UAAU,OAAO;IACf,OAAO,EAAE,MAAM,CAAC;IAChB,MAAM,EAAE,MAAM,CAAC;IACf,IAAI,EAAE,QAAQ,CAAC,KAAK,CAAC,QAAQ,CAAC;CAC/B"}
