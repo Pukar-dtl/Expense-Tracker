@@ -39,6 +39,16 @@ export const findExpense = async (heading: string, id: string) => {
   return expenses;
 };
 
+export const findAllExpense = async (id: string) => {
+  const expenses = await expenseModel.find({ user: id });
+
+  if (expenses.length === 0) {
+    throw new Error("Expense not found");
+  }
+
+  return expenses;
+};
+
 export const editExpense = async (
   heading: string,
   amount: number,

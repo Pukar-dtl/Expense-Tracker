@@ -4,7 +4,8 @@ import {
   addExpense,
   deleteExpense,
   editExpense,
-  findExpense
+  findExpense,
+  findAllExpense
 } from "../service/expense.service.js";
 import response from "../utils/response.js";
 
@@ -77,4 +78,18 @@ export const expenseDelete = async (req: Request, res: Response) => {
     return response(res, 500, "Something went wrong");
   }
   return response(res, 201, "expense deleted sucessfully");
+};
+
+export const expenseAllByUser = async (req: Request, res: Response) => {
+  const userToken: string | undefined = req.headers.authorization;
+
+  if (typeof userToken === "undefined") {
+    throw new Error("Authorization token not availaible");
+  }
+
+  const Userid = await jwtver(userToken);
+  
+  const data = await findAllExpense(Userid);
+
+  return response(res, 200, "expenses found", data);
 };
