@@ -1,7 +1,5 @@
-import userModel from "../models/user.model.js";
 import searchUser from "../utils/searchUser.js";
 import expenseModel from "../models/expense.model.js";
-import response from "../utils/response.js";
 
 export const addExpense = async (
   heading: string,

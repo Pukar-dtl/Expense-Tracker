@@ -1,5 +1,4 @@
 import { type Request, type Response } from "express";
-import jwtver from "../utils/jwt.verify.js";
 import {
   addExpense,
   deleteExpense,
@@ -11,13 +10,8 @@ import response from "../utils/response.js";
 
 export const expenseAdd = async (req: Request, res: Response) => {
   const { heading, amount } = req.body;
-  const userToken: string | undefined = req.headers.authorization;
 
-  if (typeof userToken === "undefined") {
-    throw new Error("Authorization token not availaible");
-  }
-
-  const Userid = await jwtver(userToken);
+  const Userid = req.userId!;
 
   const result: boolean = await addExpense(heading, amount, Userid);
   if (result === false) {
@@ -28,13 +22,7 @@ export const expenseAdd = async (req: Request, res: Response) => {
 };
 
 export const expenseSearch = async (req: Request, res: Response) => {
-  const userToken: string | undefined = req.headers.authorization;
-
-  if (typeof userToken === "undefined") {
-    throw new Error("Authorization token not availaible");
-  }
-
-  const Userid = await jwtver(userToken);
+  const Userid = req.userId!;
 
   const { heading } = req.body;
 
@@ -48,12 +36,6 @@ export const expenseSearch = async (req: Request, res: Response) => {
 };
 
 export const expenseUpdate = async (req: Request, res: Response) => {
-  `const userToken: string | undefined = req.headers.authorization;
-
-  if (typeof userToken === "undefined") {
-    throw new Error("Authorization token not availaible");
-  }`;
-
   const { heading, amount, id } = req.body;
 
   const updateResult = await editExpense(heading, amount, id);
@@ -64,12 +46,6 @@ export const expenseUpdate = async (req: Request, res: Response) => {
 };
 
 export const expenseDelete = async (req: Request, res: Response) => {
-  const userToken: string | undefined = req.headers.authorization;
-
-  if (typeof userToken === "undefined") {
-    throw new Error("Authorization token not availaible");
-  }
-
   const { id } = req.body;
 
   const sucess = await deleteExpense(id);
@@ -81,14 +57,8 @@ export const expenseDelete = async (req: Request, res: Response) => {
 };
 
 export const expenseAllByUser = async (req: Request, res: Response) => {
-  const userToken: string | undefined = req.headers.authorization;
+  const Userid = req.userId!;
 
-  if (typeof userToken === "undefined") {
-    throw new Error("Authorization token not availaible");
-  }
-
-  const Userid = await jwtver(userToken);
-  
   const data = await findAllExpense(Userid);
 
   return response(res, 200, "expenses found", data);
