@@ -1,6 +1,7 @@
 import userModel from "../models/user.model.js";
 import searchUser from "../utils/searchUser.js";
 import expenseModel from "../models/expense.model.js";
+import response from "../utils/response.js";
 
 export const addExpense = async (
   heading: string,
@@ -36,4 +37,21 @@ export const findExpense = async (heading: string, id: string) => {
   }
 
   return expenses;
+};
+
+export const editExpense = async (
+  heading: string,
+  amount: number,
+  id: string
+): Promise<boolean> => {
+  const expense = await expenseModel.findByIdAndUpdate(id, {
+    heading,
+    amount
+  });
+
+  if (!expense) {
+    throw new Error("expense id not found");
+  }
+
+  return true;
 };

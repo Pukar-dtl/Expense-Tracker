@@ -6,4 +6,5 @@ export declare const findExpense: (heading: string, id: string) => Promise<(impo
 } & {
     id: string;
 })[]>;
+export declare const editExpense: (heading: string, amount: number, id: string) => Promise<boolean>;
 //# sourceMappingURL=expense.service.d.ts.map

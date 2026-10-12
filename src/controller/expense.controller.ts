@@ -1,6 +1,6 @@
 import { type Request, type Response } from "express";
 import jwtver from "../utils/jwt.verify.js";
-import { addExpense, findExpense } from "../service/expense.service.js";
+import { addExpense, editExpense, findExpense } from "../service/expense.service.js";
 import response from "../utils/response.js";
 
 export const expenseAdd = async (req: Request, res: Response) => {
@@ -40,3 +40,19 @@ export const expenseSearch = async (req: Request, res: Response) => {
 
   return response(res, 200, "expenses found", data);
 };
+
+export const expenseUpdate = async(req:Request, res:Response)=>{
+    const userToken: string | undefined = req.headers.authorization;
+
+  if (typeof userToken === "undefined") {
+    throw new Error("Authorization token not availaible");
+  }
+
+  const {heading, amount, id} = req.body;
+
+  const updateResult = await editExpense(heading, amount, id);
+
+  if(updateResult){
+    return response(res, 201, "Expense updated successfully");
+  }
+}
