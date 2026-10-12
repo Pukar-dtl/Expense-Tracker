@@ -1,6 +1,6 @@
 import {} from "express";
 import jwtver from "../utils/jwt.verify.js";
-import { addExpense } from "../service/expense.service.js";
+import { addExpense, findExpense } from "../service/expense.service.js";
 import response from "../utils/response.js";
 export const expenseAdd = async (req, res) => {
     const { heading, amount } = req.body;
@@ -16,5 +16,18 @@ export const expenseAdd = async (req, res) => {
     else {
         return response(res, 201, "Expense added succesfully");
     }
+};
+export const expenseSearch = async (req, res) => {
+    const userToken = req.headers.authorization;
+    if (typeof userToken === "undefined") {
+        throw new Error("Authorization token not availaible");
+    }
+    const Userid = await jwtver(userToken);
+    const heading = req.body;
+    if (!heading) {
+        throw new Error("Empty request body");
+    }
+    const data = await findExpense(heading, Userid);
+    return response(res, 200, "expenses found", data);
 };
 //# sourceMappingURL=expense.controller.js.map

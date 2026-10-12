@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-interface Expense {
+export interface Expense {
     heading: string;
     amount: number;
     user: mongoose.Types.ObjectId;

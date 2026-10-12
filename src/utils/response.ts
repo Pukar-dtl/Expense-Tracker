@@ -1,6 +1,6 @@
 const response = (
   res: any,
-  code: Number,
+  code: number,
   message: string,
   data: any = null
 ) => {

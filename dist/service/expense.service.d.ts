@@ -1,2 +1,9 @@
 export declare const addExpense: (heading: string, amount: number, id: string) => Promise<boolean>;
+export declare const findExpense: (heading: string, id: string) => Promise<(import("mongoose").Document<unknown, {}, import("../models/expense.model.js").Expense, {}, import("mongoose").DefaultSchemaOptions> & import("../models/expense.model.js").Expense & {
+    _id: import("mongoose").Types.ObjectId;
+} & {
+    __v: number;
+} & {
+    id: string;
+})[]>;
 //# sourceMappingURL=expense.service.d.ts.map

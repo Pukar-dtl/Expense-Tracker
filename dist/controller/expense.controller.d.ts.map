@@ -1,1 +1,1 @@
-{"version":3,"file":"expense.controller.d.ts","sourceRoot":"","sources":["../../src/controller/expense.controller.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,KAAK,OAAO,EAAE,KAAK,QAAQ,EAAE,MAAM,SAAS,CAAC;AAKrD,eAAO,MAAM,UAAU,QAAe,OAAO,OAAO,QAAQ,iBAe3D,CAAC"}
+{"version":3,"file":"expense.controller.d.ts","sourceRoot":"","sources":["../../src/controller/expense.controller.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,OAAO,EAAE,KAAK,QAAQ,EAAE,MAAM,SAAS,CAAC;AAKtD,eAAO,MAAM,UAAU,QAAe,OAAO,OAAO,QAAQ,iBAgB3D,CAAC;AAEF,eAAO,MAAM,aAAa,QAAe,OAAO,OAAO,QAAQ,iBAkB9D,CAAC"}

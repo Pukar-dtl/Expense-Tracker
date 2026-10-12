@@ -17,4 +17,11 @@ export const addExpense = async (heading, amount, id) => {
     await newExpense.save();
     return true;
 };
+export const findExpense = async (heading, id) => {
+    const expenses = await expenseModel.find({ heading, user: id });
+    if (!expenses) {
+        throw new Error("Expense of the given heading not found");
+    }
+    return expenses;
+};
 //# sourceMappingURL=expense.service.js.map
