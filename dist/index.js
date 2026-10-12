@@ -1,4 +1,5 @@
 import userController from "./routes/usr.route.js";
+import expenseController from './routes/expense.route.js';
 import express from "express";
 import { configDotenv } from "dotenv";
 import logger from "./config/logger.js";
@@ -8,8 +9,9 @@ connectMongo();
 const app = express();
 app.use(express.json());
 app.use('/user', userController);
+app.use('/expense', expenseController);
 app.get("/", (_req, res) => {
-    res.send("Server works");
+    res.send("Server on");
 });
 const port = process.env.PORT;
 app.listen(port, () => {

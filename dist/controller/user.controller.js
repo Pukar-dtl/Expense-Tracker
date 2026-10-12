@@ -7,10 +7,11 @@ export const register = async (req, res) => {
 };
 export const login = async (req, res) => {
     const { email, password } = req.body;
-    const logintoken = loginUser(email, password);
+    const logintoken = await loginUser(email, password);
     if (!logintoken) {
         throw new Error("login failed");
     }
+    console.log(logintoken);
     return response(res, 201, "Login successful", logintoken);
 };
 //# sourceMappingURL=user.controller.js.map
