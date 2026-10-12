@@ -55,3 +55,13 @@ export const editExpense = async (
 
   return true;
 };
+
+export const deleteExpense = async (id: string): Promise<boolean> => {
+  const deleted = await expenseModel.findByIdAndDelete(id);
+
+  if (!deleted) {
+    return false;
+  }
+
+  return true;
+};

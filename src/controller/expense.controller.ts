@@ -1,6 +1,11 @@
 import { type Request, type Response } from "express";
 import jwtver from "../utils/jwt.verify.js";
-import { addExpense, editExpense, findExpense } from "../service/expense.service.js";
+import {
+  addExpense,
+  deleteExpense,
+  editExpense,
+  findExpense
+} from "../service/expense.service.js";
 import response from "../utils/response.js";
 
 export const expenseAdd = async (req: Request, res: Response) => {
@@ -30,7 +35,7 @@ export const expenseSearch = async (req: Request, res: Response) => {
 
   const Userid = await jwtver(userToken);
 
-  const {heading} = req.body;
+  const { heading } = req.body;
 
   if (!heading) {
     throw new Error("Empty request body");
@@ -41,18 +46,35 @@ export const expenseSearch = async (req: Request, res: Response) => {
   return response(res, 200, "expenses found", data);
 };
 
-export const expenseUpdate = async(req:Request, res:Response)=>{
-    const userToken: string | undefined = req.headers.authorization;
+export const expenseUpdate = async (req: Request, res: Response) => {
+  `const userToken: string | undefined = req.headers.authorization;
+
+  if (typeof userToken === "undefined") {
+    throw new Error("Authorization token not availaible");
+  }`;
+
+  const { heading, amount, id } = req.body;
+
+  const updateResult = await editExpense(heading, amount, id);
+
+  if (updateResult) {
+    return response(res, 201, "Expense updated successfully");
+  }
+};
+
+export const expenseDelete = async (req: Request, res: Response) => {
+  const userToken: string | undefined = req.headers.authorization;
 
   if (typeof userToken === "undefined") {
     throw new Error("Authorization token not availaible");
   }
 
-  const {heading, amount, id} = req.body;
+  const { id } = req.body;
 
-  const updateResult = await editExpense(heading, amount, id);
+  const sucess = await deleteExpense(id);
 
-  if(updateResult){
-    return response(res, 201, "Expense updated successfully");
+  if (sucess === false) {
+    return response(res, 500, "Something went wrong");
   }
-}
+  return response(res, 201, "expense deleted sucessfully");
+};
