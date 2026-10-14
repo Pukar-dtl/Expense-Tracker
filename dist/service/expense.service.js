@@ -1,7 +1,5 @@
-import userModel from "../models/user.model.js";
 import searchUser from "../utils/searchUser.js";
 import expenseModel from "../models/expense.model.js";
-import response from "../utils/response.js";
 export const addExpense = async (heading, amount, id) => {
     if (!heading || amount <= 0 || !id) {
         return false;
@@ -27,6 +25,13 @@ export const findExpense = async (heading, id) => {
     }
     return expenses;
 };
+export const findAllExpense = async (id) => {
+    const expenses = await expenseModel.find({ user: id });
+    if (expenses.length === 0) {
+        throw new Error("Expense not found");
+    }
+    return expenses;
+};
 export const editExpense = async (heading, amount, id) => {
     const expense = await expenseModel.findByIdAndUpdate(id, {
         heading,
@@ -34,6 +39,13 @@ export const editExpense = async (heading, amount, id) => {
     });
     if (!expense) {
         throw new Error("expense id not found");
+    }
+    return true;
+};
+export const deleteExpense = async (id) => {
+    const deleted = await expenseModel.findByIdAndDelete(id);
+    if (!deleted) {
+        return false;
     }
     return true;
 };

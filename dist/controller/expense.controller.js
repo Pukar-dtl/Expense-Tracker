@@ -1,14 +1,9 @@
 import {} from "express";
-import jwtver from "../utils/jwt.verify.js";
-import { addExpense, editExpense, findExpense } from "../service/expense.service.js";
+import { addExpense, deleteExpense, editExpense, findExpense, findAllExpense } from "../service/expense.service.js";
 import response from "../utils/response.js";
 export const expenseAdd = async (req, res) => {
     const { heading, amount } = req.body;
-    const userToken = req.headers.authorization;
-    if (typeof userToken === "undefined") {
-        throw new Error("Authorization token not availaible");
-    }
-    const Userid = await jwtver(userToken);
+    const Userid = req.userId;
     const result = await addExpense(heading, amount, Userid);
     if (result === false) {
         return response(res, 500, "Internal server error");
@@ -18,11 +13,7 @@ export const expenseAdd = async (req, res) => {
     }
 };
 export const expenseSearch = async (req, res) => {
-    const userToken = req.headers.authorization;
-    if (typeof userToken === "undefined") {
-        throw new Error("Authorization token not availaible");
-    }
-    const Userid = await jwtver(userToken);
+    const Userid = req.userId;
     const { heading } = req.body;
     if (!heading) {
         throw new Error("Empty request body");
@@ -31,14 +22,23 @@ export const expenseSearch = async (req, res) => {
     return response(res, 200, "expenses found", data);
 };
 export const expenseUpdate = async (req, res) => {
-    const userToken = req.headers.authorization;
-    if (typeof userToken === "undefined") {
-        throw new Error("Authorization token not availaible");
-    }
     const { heading, amount, id } = req.body;
     const updateResult = await editExpense(heading, amount, id);
     if (updateResult) {
         return response(res, 201, "Expense updated successfully");
     }
+};
+export const expenseDelete = async (req, res) => {
+    const { id } = req.body;
+    const sucess = await deleteExpense(id);
+    if (sucess === false) {
+        return response(res, 500, "Something went wrong");
+    }
+    return response(res, 201, "expense deleted sucessfully");
+};
+export const expenseAllByUser = async (req, res) => {
+    const Userid = req.userId;
+    const data = await findAllExpense(Userid);
+    return response(res, 200, "expenses found", data);
 };
 //# sourceMappingURL=expense.controller.js.map

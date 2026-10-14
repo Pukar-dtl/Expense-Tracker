@@ -4,6 +4,7 @@ import express from "express";
 import { configDotenv } from "dotenv";
 import logger from "./config/logger.js";
 import connectMongo from "./config/db.js";
+import errorHandler from "./middleware/errorhandlere.js";
 
 configDotenv();
 connectMongo();
@@ -16,6 +17,7 @@ app.use('/expense', expenseController);
 app.get("/", (_req, res) => {
     res.send("Server on");
 });
+app.use(errorHandler);
 
 const port = process.env.PORT;
 app.listen(port, ()=>{
